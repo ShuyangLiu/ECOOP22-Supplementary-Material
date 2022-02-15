@@ -1,46 +1,36 @@
-# #14: Compiling Volatile Correctly in Java 
-Paper submission number: 14
+# Compiling Volatile Correctly in Java 
 
 ## Overview
 The following components are included in the VM:
 - The extended Herd7 implementation with Java architecture
-  - **Location**: `~/herd`
+  - **Location**: `./herd`
   - Ocaml source code
-  - Requires Ocaml 4.09.0 and dune 2.9.1 (already installed in the VM)
+  - Requires Ocaml 4.09.0 and dune 2.9.1
   - For build instructions, please see the [Getting Started](#getting-started) section.
 
 - Litmus Tests that appeared in our paper (benchmark)
-  - **Location**: `~/litmus`
+  - **Location**: `./litmus`
   - We provide two types of litmus tests:
-    - Tests written in Java: `~/litmus/java/litmus`
-    - Tests written in Power: `~/litmus/ppc`
-  - The JAM21 model can be found at `~/litmus/java/jam21.cat`
-  - The JAM19 model can be found at `~/litmus/java/jam19.cat`
-  - Can be executed using the extended Herd7 tool with the JAM model 
+    - Tests written in Java: `./litmus/java/litmus`
+    - Tests written in Power: `./litmus/ppc`
+  - The JAM21 model can be found at `./litmus/java/jam21.cat`
+  - The JAM19 model can be found at `./litmus/java/jam19.cat`
+  - Can be executed using the extended Herd7 tool with the JAM model
   - For running instructions, please see the [Getting Started](#getting-started) section.
 
 - Coq proofs for some of the theorems in the paper (proof)
-  - **Location**: `~/coq`
+  - **Location**: `./coq`
   - Coq proofs 
   - Requires Coq 8.06.1 with Ocaml 4.02.3 (already installed in the VM)
   - For build instructions, please see the [Getting Started](#getting-started) section.
 
-## Artifact Requirements
-* Oracle VM VirtualBox >= 6.1
 
 ## Getting Started
 
-### Step 1: Starting the Virtual Machine
-To start the virtural machine, import the OVA file to virtual box and click 'Start'
-* **Username**: `user1`
-* **Password**: `password`
-
-The virtual machine runs Ubuntu 20.04 with bash as the default shell. All required dependencies should already be installed. 
-
-### Step 2: Building Herd7
+### Building Herd7
 * Change to the directory of herd7:
   ```bash
-  cd ~/herd
+  cd ./herd
   ```
 * Make sure the Ocaml version is correct:
   ```bash
@@ -54,26 +44,26 @@ The virtual machine runs Ubuntu 20.04 with bash as the default shell. All requir
   ```
   make 
   ```
-* There should be an executable file at `~/herd/_build/default/herd/herd.exe`
+* There should be an executable file at `./herd/_build/default/herd/herd.exe`
 
-### Step 3: Running Litmus Tests
+### Running Litmus Tests
 * Make sure the executable is built before this step (see step 2)
 * To execute a litmus test (with file name `<testfile>`) using the JAM model:
   ```bash
-  ~/herd/_build/default/herd/herd.exe -I ~/herd/herd/libdir \
-                                      -model ~/litmus/java/jam21.cat \
+  ./herd/_build/default/herd/herd.exe -I ./herd/herd/libdir \
+                                      -model ./litmus/java/jam21.cat \
                                       <testfile>
   ```
-  For example, to run the `~/litmus/java/litmus/volatile-non-sc.4.litmus`:
+  For example, to run the `./litmus/java/litmus/volatile-non-sc.4.litmus`:
   ```bash
-  /herd/_build/default/herd/herd.exe -I ~/herd/herd/libdir \
+  ./herd/_build/default/herd/herd.exe -I ~/herd/herd/libdir \
                                       -model ~/litmus/java/jam21.cat \
                               ~/litmus/java/litmus/volatile-non-sc.4.litmus
   ```
-* To execute a litmus test with other memory models, simply change the `-model` option to the model's `cat` file. If the model is included by default (such as the PowerPC model), then the option can be omitted. For example, to run litmus tests written in Power instructions such as `~/litmus/ppc/volatile-non-sc.4.ppc.litmus` with the Power memory model:
+* To execute a litmus test with other memory models, simply change the `-model` option to the model's `cat` file. If the model is included by default (such as the PowerPC model), then the option can be omitted. For example, to run litmus tests written in Power instructions such as `./litmus/ppc/volatile-non-sc.4.ppc.litmus` with the Power memory model:
   ```bash
-  /herd/_build/default/herd/herd.exe -I ~/herd/herd/libdir \
-                                      ~/litmus/ppc/volatile-non-sc.4.ppc.litmus
+  ./herd/_build/default/herd/herd.exe -I ./herd/herd/libdir \
+                                      ./litmus/ppc/volatile-non-sc.4.ppc.litmus
   ```
   Note that the JAM model is not included by default. Therefore it should always be explicitly specified using the `-model` option.
 
@@ -85,13 +75,13 @@ The virtual machine runs Ubuntu 20.04 with bash as the default shell. All requir
   ```
   The results should match with our results claimed in the paper.
 
-* You can also run all the litmus tests using the python script we included `~/run.py`. The script runs both JAM19 and JAM21 on the litmus tests provided inside `~/litmus/java/litmus` . To run the script:
+* You can also run all the litmus tests using the python script we included `./run.py`. The script runs both JAM19 and JAM21 on the litmus tests provided inside `./litmus/java/litmus` . To run the script:
   ```bash
-  python3 ~/run.py
+  python3 ./run.py
   ```
-  An output file `~/results.md` includes a table comparing the results running JAM19 and JAM21 on the litmus tests. 
+  An output file `./results.md` includes a table comparing the results running JAM19 and JAM21 on the litmus tests. 
 
-### Step 4: Writing Custom Java Litmus Test
+### Writing Custom Java Litmus Test
 New litmus tests written in Java syntax can be created using the following format. First, specify `Java` on the first line so that the tool will choose the Java architecture:
 ```
 Java <testname>
@@ -114,7 +104,7 @@ Thread0 {
   int r1 = X.getVolatile();
 }
 ```
-For the full supported grammar, please see the grammar file at `~/herd/lib/JavaParser.mly`
+For the full supported grammar, please see the grammar file at `./herd/lib/JavaParser.mly`
 
 Finally, specify the condition to be checked by the tool using the memory model. For example, the following says "there exists an execution such that at the end the `r1` variable on thread 0 is 0 and the `r2` variable on thread 1 is 0":
 ```
@@ -124,7 +114,7 @@ exists
 Save it to a file `<testname>.litmus` and use the commands from the previous section to run it. Note that Java litmus tests can only be executed with `jam21.cat` or `jam19.cat` since they use a specific set of memory actions that are different from other languages. 
 
 
-### Step 5: Compiling the Coq proofs
+### Compiling the Coq proofs
   * Switch to Coq 8.06.1 with Ocaml 4.02.3:
     ```bash
     opam switch 4.02.3
@@ -135,7 +125,7 @@ Save it to a file `<testname>.litmus` and use the commands from the previous sec
     ```
   * Change directory:
     ```bash
-    cd ~/coq
+    cd ./coq
     ```
   * Generate Makefile:
     ```bash
@@ -145,11 +135,4 @@ Save it to a file `<testname>.litmus` and use the commands from the previous sec
     ```bash
     make clean all
     ```
-## Troubleshooting
-* `Command `coqc` not found` even after switching to 4.02.3
-  - Usually this is due to the environment variables not updated. please make sure to run `eval $(opam env)` every time switching ocaml version. 
-
-* `bash:~/herd/_build/default/herd/herd.exe: No such file for directory`
-  - Please make sure `herd7` is built before running the litmus tests as they are not installed 
-
 
