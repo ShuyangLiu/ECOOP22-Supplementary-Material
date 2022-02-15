@@ -1,0 +1,11 @@
+/Version.ml
+_build/
+.merlin
+herdtools7.install
+/herd-www/www/catalogue
+/herd-www/www/weblib
+jerd.js
+jerd.byte
+catIncludes.ml
+*~
+*.swp

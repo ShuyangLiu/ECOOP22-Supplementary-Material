@@ -77,7 +77,7 @@ The virtual machine runs Ubuntu 20.04 with bash as the default shell. All requir
   ```
   Note that the JAM model is not included by default. Therefore it should always be explicitly specified using the `-model` option.
 
-* There are three types of results: `Never`, `Sometimes`, and `Always`. It can be found at the line starting with `Observation...` in the output of herd. For example, the test `volatile-non-sc.5.ppc.litmus` is allowed by the the Power memory model, so the output looks like:
+* There are three types of results: `Never`, `Sometimes`, and `Always`. It can be found at the line starting with `Observation...` in the output of herd. For example, the test `volatile-non-sc.5.ppc.litmus` is allowed by the Power memory model, so the output looks like:
   ```
   ...
   Observation volatile-non-sc.5.ppc Sometimes 1 94
@@ -152,27 +152,4 @@ Save it to a file `<testname>.litmus` and use the commands from the previous sec
 * `bash:~/herd/_build/default/herd/herd.exe: No such file for directory`
   - Please make sure `herd7` is built before running the litmus tests as they are not installed 
 
-## Badges
-We would like to claim the "functional", "reusable", and "available" badges for this artifact. 
 
-* What are claims about the artifact’s functionality to be evaluated by the committee?
-  1. Our extended herd7 with Java supports the Java VarHandle syntax for litmus test with the following methods from the API:
-      - Read Operations: `get()`, `getOpaque()`, `getAcquire()`, `getVolatile()`
-      - Write Operations: `set()`, `setOpaque()`, `setRelease()`, `setVolatile()`
-      - Fences: `fullFence()`, `acquireFence()`, `releaseFence()`
-      - Read-modify-write Operations: `getAndAdd()`, `getAndAnd()`, `getAndOr()`, `getAndXor()`, `getAndAddAcquire()`, `getAndAndAcquire()`, `getAndOrAcquire()`, `getAndXorAcquire()`, `getAndAddRelease()`, `getAndAndRelease()`, `getAndOrRelease()`, `getAndXorRelease()`
-  2. The Coq proofs are sound (automatically checked by the compiler)
-
-* Which activities described in the paper have led to the creation of the artifact components?
-  - To accuratly validate the revised JAM model we described in the paper, the herd7 tool extended with the Java "architecture" is essential. The current official herd7 tool suite (https://github.com/herd/herdtools7) does not support litmus tests written in Java
-  - The Coq proofs ensure the soundness of our proofs in Appendix H of the paper.
-
-* Which data or conclusions from the paper are generated/supported by the artifact components?
-  - The results of running the litmus tests with our implementation of Herd is reproducable and the test results are the same as claimed in Appendix K (Fig. 18, 19, 23) of the paper.
-
-* What are the authors' claims about the artifact's reusability to be evaluated by the committee?
-  - Custom litmus tests using the Java VarHandle API can be created following instructions from Step 4 and executed following Step 3 in the Getting Started section.
-  - The grammar of the litmus tests can be extended by modifying `JavaParser.mly` and `JavaLexer.mll`
-  - The litmus tests in Java syntax can be easily converted to the test format for jcstress test suite for stress tests
-
-* For the available badge, we agree to publish our work under a Creative Commons license. While we are certain about the Coq proofs and the litmus tests, we realize the situation for our extended Herd7 tool might be different and complicated since [Herd7](https://github.com/herd/herdtools7) is a open source software under a CeCILL-B license hosted on GitHub. If the option of publishing it under a Creative Commons license is not available to us, we are going to create a pull request and ask the maintainers of Herd7 to merge our extension to the official repository. We have already contacted the author of Herd7 and they are willing to do so once we update the tool to their current version.

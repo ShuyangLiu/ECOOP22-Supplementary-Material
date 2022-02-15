@@ -1,0 +1,9 @@
+(ocamllex AArch64Lexer ARMLexer BellLexer CLexer JavaLexer lexHint lexOutMapping lexRename lexSplit lexUtils MIPSLexer modelLexer PPCLexer RISCVLexer runTypeUtils scopeLexer splitter stateLexer X86Lexer echo)
+
+(ocamlyacc AArch64Parser CParser JavaParser MIPSParser PPCParser scopeParser  X86Parser ARMParser  LISAParser modelParser  RISCVParser  stateParser)
+
+(library
+   (name herdtools)
+   (wrapped false)
+   (modules_without_implementation sign outTests JavaType AST CAst Scalar archBase PPMode name value)
+)
