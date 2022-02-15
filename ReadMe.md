@@ -56,9 +56,9 @@ The following components are included in the VM:
   ```
   For example, to run the `./litmus/java/litmus/volatile-non-sc.4.litmus`:
   ```bash
-  ./herd/_build/default/herd/herd.exe -I ~/herd/herd/libdir \
-                                      -model ~/litmus/java/jam21.cat \
-                              ~/litmus/java/litmus/volatile-non-sc.4.litmus
+  ./herd/_build/default/herd/herd.exe -I ./herd/herd/libdir \
+                                      -model ./litmus/java/jam21.cat \
+                              ./litmus/java/litmus/volatile-non-sc.4.litmus
   ```
 * To execute a litmus test with other memory models, simply change the `-model` option to the model's `cat` file. If the model is included by default (such as the PowerPC model), then the option can be omitted. For example, to run litmus tests written in Power instructions such as `./litmus/ppc/volatile-non-sc.4.ppc.litmus` with the Power memory model:
   ```bash

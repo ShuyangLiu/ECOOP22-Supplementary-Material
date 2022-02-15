@@ -2,7 +2,7 @@ import glob2, subprocess
 
 # Finds all litmus tests and run them with herd
 # then generates nicely formated result file(s)
-HOME        = "/home/user1/"
+HOME        = "./"
 HERD_DIR    = HOME + "herd/"
 HERD        = HERD_DIR + "_build/default/herd/herd.exe"
 HERD_LIB    = HERD_DIR + "herd/libdir/"
@@ -21,10 +21,10 @@ def get_result(model, test):
         for line in lines:
             if line.startswith("Observation"):
                 obs = line.split(' ')[2]
-                
-    except subprocess.TimeoutExpired as e:
+
+    except subprocess.TimeoutExpired:
         obs = "timeout"
-    
+
     return obs
 
 all_litmus_tests = glob2.glob(LITMUS_DIR+'**/*.litmus', recursive=True)
