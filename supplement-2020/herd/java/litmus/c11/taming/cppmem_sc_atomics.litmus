@@ -1,0 +1,16 @@
+Java cppmem_sc_atomics
+
+{ x = 2; y = 0;0:X=x;0:Y=y;1:X=x;1:Y=y;}
+
+Thread0 {
+  X.setVolatile(3);
+}
+
+Thread1 {
+  if (X.getVolatile() == 3) {
+    Y.set(1);
+  }
+}
+
+exists
+(y = 2)

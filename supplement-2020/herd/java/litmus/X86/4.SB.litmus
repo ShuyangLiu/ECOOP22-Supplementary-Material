@@ -1,0 +1,30 @@
+Java 4.SB
+{
+x = 0; y = 0; z = 0; a = 0;
+0:X=x; 0:Y=y; 0:Z=z; 0:A=a;
+1:X=x; 1:Y=y; 1:Z=z; 1:A=a;
+2:X=x; 2:Y=y; 2:Z=z; 2:A=a;
+3:X=x; 3:Y=y; 3:Z=z; 3:A=a;
+}
+
+Thread0 {
+  X.setOpaque(1);
+  int eax = Y.getOpaque();
+}
+
+Thread1 {
+  Y.setOpaque(1);
+  int eax = Z.getOpaque();
+}
+
+Thread2 {
+  Z.setOpaque(1);
+  int eax = A.getOpaque();
+}
+
+Thread3 {
+  A.setOpaque(1);
+  int eax = X.getOpaque();
+}
+
+exists (0:eax=0 /\ 1:eax=0 /\ 2:eax=0 /\ 3:eax=0)

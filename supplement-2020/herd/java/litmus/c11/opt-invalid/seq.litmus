@@ -1,0 +1,25 @@
+Java seq
+{ a = 0; x = 0; y = 0;0:A=a;0:X=x;0:Y=y;1:A=a;1:X=x;1:Y=y;2:A=a;2:X=x;2:Y=y;}
+
+Thread0 {
+  A.set(1);
+}
+
+Thread1 {
+  int r0 = X.getOpaque();
+  if (r0) {
+    int r1 = A.get();
+    if (r1) {
+      Y.setOpaque(1);
+    }
+  }
+}
+
+Thread2 {
+  int r2 = Y.getOpaque();
+  if (r2) {
+    X.setOpaque(1);
+  }
+}
+
+exists (a=1 /\ x=1 /\ y=1)

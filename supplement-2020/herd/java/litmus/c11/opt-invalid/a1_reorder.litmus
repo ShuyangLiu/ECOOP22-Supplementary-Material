@@ -1,0 +1,16 @@
+Java a1_reorder
+{ x = 0; y = 0;0:X=x;0:Y=y;1:X=x;1:Y=y;}
+
+Thread0 {
+  X.setRelease(1);
+  int r0 = Y.getOpaque();
+}
+
+Thread1 {
+  int r1 = X.getAcquire();
+  if (r1) {
+    Y.set(1);
+  }
+}
+
+exists(x=1 /\ y=1)

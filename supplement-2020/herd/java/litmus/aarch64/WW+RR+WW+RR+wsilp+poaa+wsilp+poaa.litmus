@@ -1,0 +1,33 @@
+Java WW+RR+WW+RR+wsilp+poaa+wsilp+poaa
+
+{
+x = 0; y = 0;
+0:X=x;
+1:X=x; 1:Y=y;
+2:Y=y;
+3:Y=y; 3:X=x;
+}
+
+Thread0 {
+  X.setRelease(1);
+  X.setRelease(2);
+}
+
+Thread1 {
+  int x0 = X.getAcquire();
+  int x2 = Y.getAcquire();
+}
+
+Thread2 {
+  Y.setRelease(1);
+  Y.setRelease(2);
+}
+
+Thread3 {
+  int x0 = Y.getAcquire();
+  int x2 = X.getAcquire();
+}
+
+exists
+(x=2 /\ y=2 /\ 1:x0=2 /\ 1:x2=0 /\ 3:x0=2 /\ 3:x2=0)
+

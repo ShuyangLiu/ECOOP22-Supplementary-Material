@@ -1,0 +1,27 @@
+Java linearisation
+{ x = 0; y = 0; w = 0; z = 0;0:X=x;0:Y=y;0:W=w;0:Z=z;1:X=x;1:Y=y;1:W=w;1:Z=z;2:X=x;2:Y=y;2:W=w;2:Z=z;}
+
+Thread0 {
+  int t = X.getAcquire() + Y.get();
+
+  if (t == 2) {
+    W.setRelease(1);
+  }
+}
+
+Thread1 {
+  int r0 = W.getOpaque();
+  if (r0) {
+    Z.setOpaque(1);
+  }
+}
+
+Thread2 {
+  int r1 = Z.getOpaque();
+  if (r1) {
+    Y.set(1);
+    X.setRelease(1);
+  }
+}
+
+exists (0:t=2 /\ w=1 /\ x=1 /\ y=1 /\ z=1)

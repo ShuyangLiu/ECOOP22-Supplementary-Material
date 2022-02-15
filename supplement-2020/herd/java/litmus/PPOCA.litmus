@@ -1,0 +1,25 @@
+Java PPOCA
+
+{
+x = 0; y = 0; z = 0;
+0:X=x; 0:Y=y;
+1:X=x; 1:Y=y; 1:Z=z;
+}
+
+Thread0 {
+  X.setOpaque(1);
+  fullFence();
+  Y.setOpaque(1);
+}
+
+Thread1 {
+  int x0 = Y.getOpaque();
+  if (x0 == 0) {
+    Z.setOpaque(1);
+    int x4 = Z.getOpaque();
+    int x6 = X.getOpaque();
+  }
+}
+
+exists
+(1:x0=1 /\ 1:x4=1 /\ 1:x6=0)

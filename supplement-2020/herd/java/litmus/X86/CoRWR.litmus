@@ -1,0 +1,12 @@
+Java CoRWR
+{ x = 0;
+  0:X=x;
+}
+
+Thread0 {
+  int eax = X.getOpaque();
+  X.setOpaque(1);
+  int ebx = X.getOpaque();
+}
+
+exists (0:eax=1 /\ 0:ebx=0)

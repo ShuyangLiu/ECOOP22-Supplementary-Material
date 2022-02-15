@@ -1,0 +1,21 @@
+-I SC
+-R . ""
+./Dynamic.v
+./TermDec.v
+./History.v
+./Hwf.v
+./Itemizable.v
+./Match.v
+./Truncate.v
+./SC/Common.v
+./SC/DRF.v
+./SC/Volatile.v
+./Monotonicity.v
+./ReleaseAcquire.v
+./PreSyntax.v
+./Syntax.v
+./Relation.v
+./Subst.v
+./Sequence.v
+./Tactics.v
+./TraverseTactics.v

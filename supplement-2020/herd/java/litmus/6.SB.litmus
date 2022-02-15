@@ -1,0 +1,46 @@
+Java 6.SB
+
+{
+x = 0; y = 0; z = 0; a = 0; b = 0; c = 0;
+0:X=x; 0:Y=y;
+1:Y=y; 1:Z=z;
+2:Z=z; 2:A=a;
+3:A=a; 3:B=b;
+4:B=b; 4:C=c;
+5:X=x; 5:C=c;
+}
+
+Thread0 {
+  X.setOpaque(1);
+  int eax = Y.getOpaque();
+}
+
+Thread1 {
+  Y.setOpaque(1);
+  int eax = Z.getOpaque();
+}
+
+Thread2 {
+  Z.setOpaque(1);
+  int eax = A.getOpaque();
+}
+
+Thread3 {
+  A.setOpaque(1);
+  int eax = B.getOpaque();
+}
+
+Thread4 {
+  B.setOpaque(1);
+  int eax = C.getOpaque();
+}
+
+Thread5 {
+  C.setOpaque(1);
+  int eax = X.getOpaque();
+}
+
+exists
+(0:eax=0 /\ 1:eax=0 /\ 2:eax=0 /\ 3:eax=0 /\ 4:eax=0 /\ 5:eax=0)
+
+

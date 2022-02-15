@@ -1,0 +1,26 @@
+Java c_p_reorder
+{ x = 0; y = 0; p = 0; q = 0; zero = 0; one = 1;0:X=x;0:Y=y;0:P=p;0:Q=q;0:ZERO=zero;0:ONE=one;1:X=x;1:Y=y;1:P=p;1:Q=q;1:ZERO=zero;1:ONE=one;}
+
+Thread0 {
+  int r0 = X.getOpaque();
+  if (r0) {
+    Q.set(1);
+    int t = P.compareAndExchangeAcquire(ONE.get(), 2);
+    if (t) {
+      Y.setOpaque(1);
+    }
+  }
+}
+
+Thread1 {
+  int r1 = Y.getOpaque();
+  if (r1) {
+    int r2 = Q.get();
+    if (r2) {
+      P.set(1);
+      X.setOpaque(1);
+    }
+  }
+}
+
+exists (p=1 /\ q=1)

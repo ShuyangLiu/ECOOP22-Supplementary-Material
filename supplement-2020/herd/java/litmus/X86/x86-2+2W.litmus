@@ -1,0 +1,21 @@
+Java x86-2+2W
+
+{
+x = 0; y = 0;
+0:X=x; 0:Y=y;
+1:X=x; 1:Y=y;
+}
+
+Thread0 {
+  X.setOpaque(2);
+  Y.setOpaque(1);
+}
+
+Thread1 {
+  Y.setOpaque(2);
+  X.setOpaque(1);
+}
+
+exists
+(x=2 /\ y=2)
+

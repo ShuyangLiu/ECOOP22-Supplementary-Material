@@ -1,0 +1,73 @@
+"Java Access Modes"
+
+let opq = O | RA | V
+let rel = (W) & (REL | V) (* Release write or Release Fence *)
+let acq = (R) & (ACQ | V) (* Acquire read or Acquire Fence  *)
+let vol = V
+let fence = F
+
+(* volatile accesses extend push order *)
+let svo = po;[fence & REL];po;[W] | [R];po;[fence & ACQ];po
+let spush = po;[fence & V];po
+
+(* release acquire ordering *)
+let ra = po;[rel] | [acq];po
+
+(* intra thread volatile ordering *)
+let volint =  [V];po;[V]
+
+(* intrathread ordering contraints *)
+let into = svo | spush | ra | volint
+
+(* define trace order, ensure it respects rf and intra thread specified orders *)
+(* NOTE ((W * FW) & loc & ~id) = cofw *)
+let push = spush | volint
+with pushto from linearisations(domain(push), ((W * FW) & loc & ~id) | rf | po)
+
+(* cross thread push ordering extended with volatile memory accesses *)
+(* extend ra visibility *)
+(* let sw = [M & rel] ; rfe ; [M & acq] *)
+let vvo = into | rf | pushto ; push
+let vo = vvo+ | po-loc
+
+include "filters.cat"
+
+let WWco(rel) = WW(rel) & loc & ~id
+
+(* initial writes are before everything *)
+let coinit = loc & IW*(W\IW)
+
+(* final writes are co-after everything *)
+let cofw = WWco((W * FW))
+
+(* jom coherence *)
+let coww = WWco(vo)
+let cowr = WWco(vo;invrf)
+let corw = WWco(vo;po)
+let corr = [opq] ; WWco(rf;po;invrf) ; [opq]
+
+(* borrow general definition from RC11 that will work for atomic rws and split instruction rws *)
+(*let rmw-jom = [RMW] | rmw*)
+
+(* use to define when they are executed *)
+
+include "cross.cat"
+let co0 = loc & (IW*(W\IW)|(W\FW)*FW)
+with cormwtotal from generate_orders(RMW, co0)
+
+(* i1 -rf> ir -rmw> i2 /\ i1 -co> i3 => i2 -co> i3 atm coherence *)
+(* let cormwexcl = WWco((rf;[RMW])^-1;co-jom) *)
+
+let rec co-jam = coww
+               | cowr
+               | corw
+               | corr
+               | cormwtotal
+               | WWco((rf;[RMW])^-1;co-jam)
+               | coinit
+               | cofw
+
+acyclic (po | rf) ; [opq] as no-thin-air
+acyclic co-jam as coherence
+
+show corr, corw, cowr, coww, coinit, cofw, cormwtotal

@@ -1,0 +1,40 @@
+Java read-write-sc
+
+{
+x = 0;
+y = 0;
+z = 0;
+0:X=x;0:Y=y;0:Z=z;
+1:X=x;1:Y=y;1:Z=z;
+2:X=x;2:Y=y;2:Z=z;
+3:X=x;3:Y=y;3:Z=z;
+4:X=x;4:Y=y;4:Z=z;
+}
+
+
+Thread0 {
+  X.setVolatile(1);
+  int r1 = Y.getVolatile();
+}
+
+Thread1 {
+  Y.setVolatile(1);
+}
+
+Thread2 {
+  int r1 = Y.getVolatile();
+  Z.setVolatile(1);
+}
+
+Thread3 {
+  Z.setVolatile(2);
+  int r1 = X.getVolatile();
+}
+
+Thread4 {
+  int r1 = Z.getVolatile();
+  int r2 = Z.getVolatile();
+}
+
+exists
+(0:r1 = 0 /\ 2:r1 = 1 /\ 3:r1 = 0 /\ 4:r1 = 1 /\ 4:r2 = 2)

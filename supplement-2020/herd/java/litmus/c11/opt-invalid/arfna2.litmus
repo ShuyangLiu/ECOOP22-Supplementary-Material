@@ -1,0 +1,25 @@
+Java arfna_transformed
+{ a = 0; b = 0; x = 0; y = 0;0:A=a;0:B=b;0:X=x;0:Y=y;1:A=a;1:B=b;1:X=x;1:Y=y;}
+
+Thread0 {
+  int r0 = X.getOpaque();
+  if (r0) {
+    B.set(1);
+    int t = A.get();
+    if (t) {
+      Y.setOpaque(1);
+    }
+  }
+}
+
+Thread1 {
+  int r1 = Y.getOpaque();
+  if (r1) {
+    if (B.get()) {
+      A.set(1);
+      X.setOpaque(1);
+    }
+  }
+}
+
+exists (x=1 /\ y=1)

@@ -1,0 +1,26 @@
+Java c
+{ x = 0; y = 0; p = 0; q = 0;0:X=x;0:Y=y;0:P=p;0:Q=q;1:X=x;1:Y=y;1:P=p;1:Q=q;}
+
+Thread0 {
+  int r0 = X.getOpaque();
+  if (r0) {
+    int t = P.get();
+    Q.set(1);
+    if (t) {
+      Y.setOpaque(1);
+    }
+  }
+}
+
+Thread1 {
+  int r1 = Y.getOpaque();
+  if (r1) {
+    int r2 = Q.get();
+    if (r2) {
+      P.set(1);
+      X.setOpaque(1);
+    }
+  }
+}
+
+exists (p=1 /\ q=1)

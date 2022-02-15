@@ -1,0 +1,21 @@
+Java mp_relaxed
+
+{
+x = 0;
+y = 0;
+0:X=x;0:Y=y;1:X=x;1:Y=y;}
+
+Thread0 {
+ X.set(1);
+ Y.setOpaque(1);
+}
+
+Thread1 {
+ int r0 = Y.getOpaque();
+ int r1 = -1;
+ if (1 == r0) {
+   r1 = X.get();
+ }
+}
+
+exists (1:r0=1 /\ 1:r1=0)

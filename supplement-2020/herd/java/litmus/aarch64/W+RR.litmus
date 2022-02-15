@@ -1,0 +1,20 @@
+Java W+RR
+
+{
+x = 0;
+0:X=x;
+1:X=x;
+}
+
+Thread0 {
+  X.setOpaque(1);
+}
+
+Thread1 {
+  int x2 = X.getOpaque();
+  int x3 = X.getOpaque();
+}
+
+exists
+(1:x2=1 /\ 1:x3=0)
+

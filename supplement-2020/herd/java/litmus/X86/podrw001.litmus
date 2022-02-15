@@ -1,0 +1,28 @@
+Java podrw001
+{
+x = 0; y = 0; z = 0;
+0:X=x; 0:Y=y; 0:Z=z;
+1:X=x; 1:Y=y; 1:Z=z;
+2:X=x; 2:Y=y; 2:Z=z;
+}
+
+Thread0 {
+  Z.setOpaque(1);
+  int eax = X.getOpaque();
+}
+
+Thread1 {
+  X.setOpaque(1);
+  int eax = Y.getOpaque();
+}
+
+Thread2 {
+  Y.setOpaque(1);
+  int eax = Z.getOpaque();
+}
+
+exists
+(0:eax=0 /\ 1:eax=0 /\ 2:eax=0)
+
+
+

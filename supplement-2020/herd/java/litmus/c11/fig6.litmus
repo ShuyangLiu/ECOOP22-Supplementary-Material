@@ -1,0 +1,32 @@
+Java fig6
+{ x = 0; y = 0;0:X=x;0:Y=y;1:X=x;1:Y=y;2:X=x;2:Y=y;3:X=x;3:Y=y;}
+
+Thread0 {
+  X.setOpaque(1);
+  X.setVolatile(2);
+  Y.setVolatile(1);
+}
+
+Thread1 {
+  X.setOpaque(3);
+  Y.setVolatile(2);
+}
+
+Thread2 {
+  Y.setVolatile(3);
+  int r = X.getVolatile();
+}
+
+Thread3 {
+  int s1 = X.getOpaque();
+  int s2 = X.getOpaque();
+  int s3 = X.getOpaque();
+  int t1 = Y.getOpaque();
+  int t2 = Y.getOpaque();
+  int t3 = Y.getOpaque();
+}
+
+exists (2:r=1 /\
+        3:s1=1 /\ 3:t1=1 /\
+        3:s2=2 /\ 3:t2=2 /\
+        3:s3=3 /\ 3:t3=3)

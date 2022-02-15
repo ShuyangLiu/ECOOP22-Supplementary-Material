@@ -1,0 +1,24 @@
+Java Z6.U
+
+{
+x = 0;
+y = 0;
+0:X=x;0:Y=y;1:X=x;1:Y=y;2:X=x;2:Y=y;}
+
+Thread0 {
+  X.setVolatile(1);
+  Y.setRelease(1);
+}
+
+Thread1 {
+  int r1 = Y.getAndAdd(1);
+  int r2 = Y.getOpaque();
+}
+
+Thread2 {
+  Y.setVolatile(3);
+  int r1 = X.getVolatile();
+}
+
+exists
+(1:r1 = 1 /\ 1:r2 = 3 /\ 2:r1 = 0)

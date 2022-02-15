@@ -1,0 +1,14 @@
+Java b
+{ x = 0; y = 0;0:X=x;0:Y=y;1:X=x;1:Y=y;}
+
+Thread0 {
+  int r0 = X.getOpaque();
+  Y.setOpaque(1);
+}
+
+Thread1 {
+  int r1 = Y.getOpaque();
+  X.setOpaque(1);
+}
+
+exists (0:r0=1 /\ 1:r1=1)

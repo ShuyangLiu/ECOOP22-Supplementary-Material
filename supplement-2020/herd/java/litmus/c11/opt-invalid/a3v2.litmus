@@ -1,0 +1,17 @@
+Java a3v2
+{ x = 0; y = 0; one = 1;0:X=x;0:Y=y;0:ONE=one;1:X=x;1:Y=y;1:ONE=one;}
+
+Thread0 {
+  Y.set(1);
+  X.setRelease(1);
+}
+
+Thread1 {
+  int r0 = X.compareAndExchangeAcquire(ONE.get(), 2);
+  int r1 = -1;
+  if (r0) {
+    r1 = Y.get();
+  }
+}
+
+exists (1:r1=1)

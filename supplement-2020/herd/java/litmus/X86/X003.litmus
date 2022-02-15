@@ -1,0 +1,21 @@
+Java X003
+
+{
+x = 0; y = 0;
+0:X=x; 0:Y=y;
+1:X=x; 1:Y=y;
+}
+
+Thread0 {
+  X.setOpaque(1);
+  Y.setOpaque(1);
+}
+
+Thread1 {
+  Y.setOpaque(2);
+  int eax = Y.getOpaque();
+  int ebx = X.getOpaque();
+}
+
+exists
+(y=2 /\ 1:eax=2 /\ 1:ebx=0)

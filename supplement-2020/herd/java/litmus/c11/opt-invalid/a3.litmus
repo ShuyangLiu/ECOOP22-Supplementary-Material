@@ -1,0 +1,16 @@
+Java a3
+{ x = 0; y = 0;0:X=x;0:Y=y;1:X=x;1:Y=y;}
+
+Thread0 {
+  Y.set(1);
+  X.setRelease(1);
+}
+
+Thread1 {
+  int r1 = X.getAcquire();
+  if (r1) {
+    int r2 = Y.getOpaque();
+  }
+}
+
+exists (1:r1=1)

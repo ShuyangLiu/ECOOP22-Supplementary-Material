@@ -1,0 +1,21 @@
+Java rseq_weak
+{ x = 0; y = 0;0:X=x;0:Y=y;1:X=x;1:Y=y;2:X=x;2:Y=y;}
+
+Thread0 {
+  X.setOpaque(2);
+}
+
+Thread1 {
+  Y.set(1);
+  X.setRelease(1);
+  X.setOpaque(3);
+}
+
+Thread2 {
+  int r0 = X.getAcquire();
+  if (r0 == 3) {
+    int r1 = Y.get();
+  }
+}
+
+exists (x=3 /\ y=1)

@@ -1,0 +1,27 @@
+Java strengthen2
+{ a = 0; x = 0; y = 0; z = 0;0:A=a;0:X=x;0:Y=y;0:Z=z;1:A=a;1:X=x;1:Y=y;1:Z=z;2:A=a;2:X=x;2:Y=y;2:Z=z;}
+
+Thread0 {
+  A.set(1);
+  Z.setRelease(1);
+}
+
+Thread1 {
+  int r0 = X.getOpaque();
+  if (r0) {
+    int r1 = Z.getAcquire();
+    int r2 = A.get();
+    if (r2) {
+      Y.setOpaque(1);
+    }
+  }
+}
+
+Thread2 {
+  int r3 = Y.getOpaque();
+  if (r3) {
+    X.setOpaque(1);
+  }
+}
+
+exists (a=1 /\ z=1 /\ x=1 /\ y=1)

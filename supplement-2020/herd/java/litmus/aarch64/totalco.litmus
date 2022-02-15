@@ -1,0 +1,27 @@
+Java TotalCO
+{
+x = 0; y = 0;
+0:X=x; 0:Y=y;
+1:X=x; 1:Y=y;
+2:X=x; 2:Y=y;
+}
+
+Thread0 {
+  int x2 = X.getOpaque();
+  X.setOpaque(1);
+}
+
+Thread1 {
+  int x5 = Y.getAcquire();
+  X.setOpaque(2);
+}
+
+Thread2 {
+  int x5 = X.getAcquire();
+  Y.setOpaque(1);
+}
+
+exists
+(0:x2=1 /\ 1:x5=1 /\ 2:x5=1)
+
+

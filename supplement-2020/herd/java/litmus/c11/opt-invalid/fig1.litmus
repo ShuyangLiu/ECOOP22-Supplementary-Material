@@ -1,0 +1,16 @@
+Java fig1
+{ a = 0; x = 0; y = 0;0:A=a;0:X=x;0:Y=y;1:A=a;1:X=x;1:Y=y;}
+
+Thread0 {
+  A.set(1);
+  int r0 = X.getOpaque();
+  int r1 = A.get();
+  Y.setOpaque(1);
+}
+
+Thread1 {
+  int r2 = Y.getOpaque();
+  X.setOpaque(1);
+}
+
+exists (a=1 /\ x=1 /\ y=1)

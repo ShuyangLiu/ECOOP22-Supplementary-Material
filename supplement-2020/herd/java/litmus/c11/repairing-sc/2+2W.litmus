@@ -1,0 +1,20 @@
+Java 2+2W
+
+{
+x = 0;
+y = 0;
+0:X=x;0:Y=y;1:X=x;1:Y=y;}
+
+Thread0 {
+ X.setVolatile(1);
+ Y.setVolatile(2);
+ int r1 = Y.getOpaque();
+}
+
+Thread1 {
+ Y.setVolatile(1);
+ X.setVolatile(2);
+ int r1 = X.getOpaque();
+}
+
+exists (0:r1=1 /\ 1:r1=1)

@@ -1,0 +1,18 @@
+Java SB
+{
+x = 0; y = 0;
+0:X=x; 0:Y=y;
+1:X=x; 1:Y=y;
+}
+
+Thread0 {
+  X.setOpaque(1);
+  int eax = Y.getOpaque();
+}
+
+Thread1 {
+  Y.setOpaque(1);
+  int eax = X.getOpaque();
+}
+
+exists(0:eax=0 /\ 1:eax=0)

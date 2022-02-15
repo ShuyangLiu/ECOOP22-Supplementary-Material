@@ -1,0 +1,28 @@
+Java IRIW
+{
+x = 0; y = 0;
+0:X=x; 0:Y=y;
+1:X=x;
+2:X=x; 2:Y=y;
+3:Y=y;
+}
+
+Thread0 {
+  int eax = Y.getOpaque();
+  int ebx = X.getOpaque();
+}
+
+Thread1 {
+  X.setOpaque(1);
+}
+
+Thread2 {
+  int eax = X.getOpaque();
+  int ebx = Y.getOpaque();
+}
+
+Thread3 {
+  Y.setOpaque(1);
+}
+
+exists (0:eax=1 /\ 0:ebx=0 /\ 2:eax=1 /\ 2:ebx=0)

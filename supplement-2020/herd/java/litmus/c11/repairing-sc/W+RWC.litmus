@@ -1,0 +1,27 @@
+Java W+RWC
+
+{
+x = 0;
+y = 0;
+z = 0;
+0:X=x;0:Y=y;0:Z=z;1:X=x;1:Y=y;1:Z=z;2:X=x;2:Y=y;2:Z=z;}
+
+Thread0 {
+  X.setOpaque(1);
+  Z.setRelease(1);
+}
+
+Thread1 {
+  int r1 = Z.getAcquire();
+  fullFence();
+  int r2 = Y.getOpaque();
+}
+
+Thread2 {
+  Y.setOpaque(1);
+  fullFence();
+  int r1 = X.getOpaque();
+}
+
+exists
+(1:r1 = 1 /\ 1:r2 = 0 /\ 2:r1 = 0)

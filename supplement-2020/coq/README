@@ -1,0 +1,6 @@
+Build using the following:
+
+$ coqc --version
+The Coq Proof Assistant, version 8.6.1 ()
+compiled on  with OCaml 4.02.3
+$ coq_makefile -f _CoqProject -o Makefile && make clean all
